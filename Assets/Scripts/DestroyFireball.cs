@@ -4,12 +4,12 @@ using UnityEngine;
 
 public class DestroyFireball : MonoBehaviour
 {
-    private Rigidbody fireballRb;
+    //private Rigidbody fireballRb;
     private float topLimit = 39.0f;
     // Start is called before the first frame update
     void Start()
     {
-        fireballRb = this.GetComponent<Rigidbody>();
+        //fireballRb = this.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -18,7 +18,7 @@ public class DestroyFireball : MonoBehaviour
         if (transform.position.y > topLimit)
         {
             Destroy(gameObject);
-            Destroy(fireballRb);
+            //Destroy(fireballRb);
         }
     }
 }

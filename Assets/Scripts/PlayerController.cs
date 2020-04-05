@@ -24,19 +24,25 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider collider)
     {
         // game over if player reaches finish
-        if (collision.gameObject.CompareTag("Finish"))
+        if (collider.gameObject.CompareTag("Finish"))
         {
             Debug.Log("Mission Complete!");
         }
 
         // reset player position if hit by lava
-        else if (collision.gameObject.CompareTag("Lava"))
+        else if (collider.gameObject.CompareTag("Lava"))
         {
             //resetGame();
             Debug.Log("Game Over!");
+        }
+
+        // alert player if hit by fireball
+        else if (collider.gameObject.CompareTag("Fireball"))
+        {
+            Debug.Log("You've taken damage!");
         }
     }
 

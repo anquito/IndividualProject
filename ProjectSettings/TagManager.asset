@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Lava
+  - Fireball
   layers:
   - Default
   - TransparentFX
