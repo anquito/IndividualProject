@@ -6,14 +6,19 @@ public class GameManager : MonoBehaviour
     // Place holders to allow connecting to other objects
     public Transform spawnPoint;
     public GameObject player;
+    public GameObject spawnManager;
+    public ParticleSystem steamParticle;
+    public ParticleSystem dustParticle;
 
     // Flags that control the state of the game
     private float elapsedTime = 0;
     private bool isRunning = false;
-    private bool isFinished = false;
+    public bool isFinished = false;
 
     // So that we can access the player's controller from this script
     private FirstPersonController fpsController;
+
+    private SpawnManager spawner;
 
 
     // Use this for initialization
@@ -22,8 +27,15 @@ public class GameManager : MonoBehaviour
         // Finds the First Person Controller script on the Player
         fpsController = player.GetComponent<FirstPersonController>();
 
+        spawner = spawnManager.GetComponent<SpawnManager>();
+
         // Disables controls at the start.
         fpsController.enabled = false;
+
+        spawner.enabled = false;
+
+        steamParticle.Stop();
+        dustParticle.Stop();
     }
 
 
@@ -37,6 +49,11 @@ public class GameManager : MonoBehaviour
         // Move the player to the spawn point, and allow it to move.
         PositionPlayer();
         fpsController.enabled = true;
+
+        spawner.enabled = true;
+
+        steamParticle.Play();
+        dustParticle.Play();
     }
 
 
@@ -65,6 +82,11 @@ public class GameManager : MonoBehaviour
         isRunning = false;
         isFinished = true;
         fpsController.enabled = false;
+
+        spawner.enabled = false;
+
+        steamParticle.Stop();
+        dustParticle.Stop();
     }
 
 
