@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Lava
   - Fireball
+  - PowerUp
   layers:
   - Default
   - TransparentFX

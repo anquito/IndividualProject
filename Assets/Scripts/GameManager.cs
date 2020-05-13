@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public bool isFinished = false;
 
     // So that we can access the player's controller from this script
-    private FirstPersonController fpsController;
+    public FirstPersonController fpsController;
 
     private SpawnManager spawner;
 

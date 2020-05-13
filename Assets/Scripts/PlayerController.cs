@@ -9,7 +9,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 startPosition;
     private GameObject finish;
     private GameObject lava;
+    private GameObject[] powerUps;
+    public bool hasPowerUp = false;
+
     public AudioClip lavaSound;
+    public AudioClip powerUpSound;
     private AudioSource audioSource;
     //public Vector3 startPosition = new Vector3(0, 0, 0);
     // Start is called before the first frame update
@@ -20,6 +24,7 @@ public class PlayerController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
         finish = GameObject.FindGameObjectWithTag("Finish");
         lava = GameObject.FindGameObjectWithTag("Lava");
+        powerUps = GameObject.FindGameObjectsWithTag("PowerUp");
         startPosition = playerRb.position;
     }
 
@@ -34,13 +39,14 @@ public class PlayerController : MonoBehaviour
         // game over if player reaches finish
         if (collider.gameObject.CompareTag("Finish"))
         {
+            resetGame();
             Debug.Log("Mission Complete!");
         }
 
         // reset player position if hit by lava
         else if (collider.gameObject.CompareTag("Lava"))
         {
-            //resetGame();
+            resetGame();
             Debug.Log("Game Over!");
             audioSource.PlayOneShot(lavaSound, 0.75f);
         }
@@ -50,12 +56,31 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("You've taken damage!");
         }
+
+        else if (collider.gameObject.CompareTag("PowerUp"))
+        {
+            hasPowerUp = true;
+            collider.gameObject.SetActive(false);
+            StartCoroutine(PowerUpCountdown());
+            audioSource.PlayOneShot(powerUpSound, 0.75f);
+        }
+    }
+
+    private IEnumerator PowerUpCountdown()
+    {
+        yield return new WaitForSeconds(5.0f);
+        hasPowerUp = false;
     }
 
     void resetGame()
     {
-        playerRb.position = startPosition;
-        playerRb.velocity = Vector3.zero;
-        playerRb.angularVelocity = Vector3.zero;
+        for (int i = 0; i < powerUps.Length; i++)
+        {
+            powerUps[i].gameObject.SetActive(true);
+        }
+
+        //playerRb.position = startPosition;
+        //playerRb.velocity = Vector3.zero;
+        //playerRb.angularVelocity = Vector3.zero;
     }
 }
