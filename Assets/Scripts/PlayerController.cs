@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour
     private GameObject[] powerUps;
     public bool hasPowerUp = false;
 
+    public GameManager gameManager;
+
     public AudioClip lavaSound;
     public AudioClip powerUpSound;
     private AudioSource audioSource;
@@ -34,11 +36,12 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    void OnTriggerEnter(Collider collider)
+    public void OnTriggerEnter(Collider collider)
     {
         // game over if player reaches finish
         if (collider.gameObject.CompareTag("Finish"))
         {
+            gameManager.isWon = true;
             resetGame();
             Debug.Log("Mission Complete!");
         }
@@ -46,6 +49,7 @@ public class PlayerController : MonoBehaviour
         // reset player position if hit by lava
         else if (collider.gameObject.CompareTag("Lava"))
         {
+            gameManager.isWon = false;
             resetGame();
             Debug.Log("Game Over!");
             audioSource.PlayOneShot(lavaSound, 0.75f);
